@@ -1,4 +1,4 @@
-const NexusHub = require('./NexusHub')
+const NexusHub = require('./helper/NexusHub')
 
 async function main() {
   const nexus = new NexusHub('myzrael', 'alliance')
