@@ -1,0 +1,15 @@
+{
+  "name": "wow-classic-prices",
+  "version": "1.0.0",
+  "description": "View item prices for WoW Classic easily",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tyler Sedlar, Jacob Doiron",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}
