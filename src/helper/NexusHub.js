@@ -107,23 +107,41 @@ module.exports = NexusHub
 
 module.exports.getServers = async function () {
   const request = await fetch(SERVER_API)
-  return await request.json()
+  let result = await request.json()
+
+  if (!result.length) {
+    result = []
+  }
+
+  return result
 }
 
 module.exports.searchItems = async function(query, limit = 10, threshold = 0.4) {
-  const apiURL = util.format(SEARCH_SUGGEST_API, limit, threshold, query)
+  const apiURL = util.format(SEARCH_API, limit, threshold, query)
   const request = await fetch(apiURL)
-  return await request.json()
+  let result = await request.json()
+
+  if (!result.length) {
+    result = []
+  }
+
+  return result
 }
 
 module.exports.searchSuggestedItems = async function(query, limit = 10) {
   const apiURL = util.format(SEARCH_SUGGEST_API, limit, query)
   const request = await fetch(apiURL)
-  return await request.json()
+  let result = await request.json()
+
+  if (!result.length) {
+    result = []
+  }
+
+  return result
 }
 
 module.exports.cleanItemSuffix = function(itemName) {
-  for (suffix of SUFFIXES) {
+  for (let suffix of SUFFIXES) {
     if (itemName.toLowerCase().endsWith(suffix.toLowerCase())) {
       itemName = itemName.substring(0, itemName.length - suffix.length)
       itemName = itemName.replace(/\s\s+/g, ' ')
@@ -132,4 +150,6 @@ module.exports.cleanItemSuffix = function(itemName) {
   return itemName
 }
 
-module.exports.FACTIONS = ['alliance', 'horde']
+module.exports.FACTIONS = ['Alliance', 'Horde']
+module.exports.SEARCH_RATE_LIMIT_PER_SEC = 15
+module.exports.PRICE_RATE_LIMIT_PER_SEC = 10
