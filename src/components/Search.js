@@ -11,9 +11,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import { TextField } from '@material-ui/core';
 
 import NexusHub, {
-    SEARCH_RATE_LIMIT_PER_SEC,
     PRICE_RATE_LIMIT_PER_SEC,
-    searchSuggestedItems,
     cleanItemSuffix
 } from '../helper/NexusHub'
 
@@ -22,10 +20,6 @@ import { AppContext, PriceContext } from '../App'
 const CLASSIC_ITEMS = require('wow-classic-items/data/json/data.json')
 const throttle = require('p-throttle')
 const stringComp = require('string-similarity')
-
-const searchThrottle = throttle(async (query) => {
-    return await searchSuggestedItems(query, 10, 0.4)
-}, SEARCH_RATE_LIMIT_PER_SEC, 1000)
 
 const priceThrottle = throttle(async (nexus, item) => {
     const itemData = await nexus.fetchData(item.uniqueName)
@@ -83,7 +77,6 @@ function Search(props) {
         }
 
         if (nexus && props.server && props.faction && query && query.length >= 3) {
-            searchThrottle.abort()
             priceThrottle.abort()
 
             // remove items with an invalid price due to aborting
@@ -99,11 +92,11 @@ function Search(props) {
             let fuzzyItems = CLASSIC_ITEMS.filter(i => i.name.toLowerCase().includes(query.toLowerCase()))
 
             // sort by similarity
-            fuzzyItems.sort((a, b) => {
-                const aSimilarity = stringComp.compareTwoStrings(a.name.toLowerCase(), query.toLowerCase())
-                const bSimilarity = stringComp.compareTwoStrings(b.name.toLowerCase(), query.toLowerCase())
-                return bSimilarity - aSimilarity
-            })
+            // fuzzyItems.sort((a, b) => {
+            //     const aSimilarity = stringComp.compareTwoStrings(a.name.toLowerCase(), query.toLowerCase())
+            //     const bSimilarity = stringComp.compareTwoStrings(b.name.toLowerCase(), query.toLowerCase())
+            //     return bSimilarity - aSimilarity
+            // })
 
             // top 10 ranked matches
             fuzzyItems = fuzzyItems.slice(0, Math.min(fuzzyItems.length, 10))

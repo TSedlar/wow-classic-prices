@@ -107,3 +107,6 @@ dist
 # lockfiles
 yarn.lock
 package-lock.json
+
+# random tests
+filtertest.js
