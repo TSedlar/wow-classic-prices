@@ -135,7 +135,7 @@ function Search(props) {
                 setPriceState({ prices: priceState.prices })
             }
 
-            fetchData()
+            // fetchData()
         } else {
             setAppState({ items: [] })
             setPriceState({ prices: priceState.prices })
