@@ -151,5 +151,5 @@ module.exports.cleanItemSuffix = function(itemName) {
 }
 
 module.exports.FACTIONS = ['Alliance', 'Horde']
-module.exports.SEARCH_RATE_LIMIT_PER_SEC = 15
-module.exports.PRICE_RATE_LIMIT_PER_SEC = 10
+module.exports.SEARCH_RATE_LIMIT_PER_SEC = 6
+module.exports.PRICE_RATE_LIMIT_PER_SEC = 4
