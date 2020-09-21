@@ -3,6 +3,7 @@ import { FormControl, InputLabel, NativeSelect } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import Search from './components/Search'
 import NexusHub from './helper/NexusHub'
+import { moneyToGSC } from './helper/WoWUtil'
 
 import './App.css'
 
@@ -69,12 +70,17 @@ function SearchContainer() {
 
   function getItemPrice(item) {
     let itemPrice = '?'
+
     const itemKey = getItemKey(item)
     if (priceState.prices.has(itemKey)) {
       let cachePrice = priceState.prices.get(itemKey)
       if (cachePrice !== -1) {
         itemPrice = cachePrice
       }
+    }
+
+    if (itemPrice !== -1 && itemPrice !== '?' && itemPrice !== 'N/A') {
+      itemPrice = moneyToGSC(parseInt(itemPrice)).toString()
     }
     return itemPrice
   }
