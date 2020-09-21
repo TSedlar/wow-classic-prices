@@ -10,7 +10,12 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { TextField } from '@material-ui/core';
 
-import NexusHub from '../helper/NexusHub'
+import NexusHub, {
+    SEARCH_RATE_LIMIT_PER_SEC,
+    PRICE_RATE_LIMIT_PER_SEC,
+    searchSuggestedItems,
+    cleanItemSuffix
+} from '../helper/NexusHub'
 
 import { AppContext, PriceContext } from '../App'
 
@@ -19,13 +24,13 @@ const throttle = require('p-throttle')
 const stringComp = require('string-similarity')
 
 const searchThrottle = throttle(async (query) => {
-    return await NexusHub.searchSuggestedItems(query, 10, 0.4)
-}, NexusHub.SEARCH_RATE_LIMIT_PER_SEC, 1000)
+    return await searchSuggestedItems(query, 10, 0.4)
+}, SEARCH_RATE_LIMIT_PER_SEC, 1000)
 
 const priceThrottle = throttle(async (nexus, item) => {
     const itemData = await nexus.fetchData(item.uniqueName)
     return resolvePrice(itemData)
-}, NexusHub.PRICE_RATE_LIMIT_PER_SEC, 1000)
+}, PRICE_RATE_LIMIT_PER_SEC, 1000)
 
 function resolvePrice(itemData) {
     let historical = -1
@@ -143,7 +148,7 @@ function Search(props) {
     )
 
     function setItemQuery(event) {
-        setQuery(NexusHub.cleanItemSuffix(event.target.value))
+        setQuery(cleanItemSuffix(event.target.value))
     }
 }
 

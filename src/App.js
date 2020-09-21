@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState, useContext } from 'react'
 import { FormControl, InputLabel, NativeSelect } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import Search from './components/Search'
-import NexusHub from './helper/NexusHub'
+import NexusHub, { FACTIONS, getServers } from './helper/NexusHub'
 import { moneyToGSC } from './helper/WoWUtil'
 
 import './App.css'
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 function SearchContainer() {
   const [serverList, setServerList] = useState([])
   const [server, setServer] = useState(null)
-  const [faction, setFaction] = useState(NexusHub.FACTIONS[0])
+  const [faction, setFaction] = useState(FACTIONS[0])
 
   const [appState] = useContext(AppContext)
   const [priceState] = useContext(PriceContext)
@@ -55,7 +55,7 @@ function SearchContainer() {
   // TODO: check cache setServer/setFaction
 
   useEffect(() => {
-    NexusHub.getServers().then(servers => {
+    getServers().then(servers => {
       setServerList(servers)
       setServer(servers[0].slug)
     })
@@ -104,7 +104,7 @@ function SearchContainer() {
         <FormControl fullWidth className={classes.margin}>
           <InputLabel>Faction</InputLabel>
           <NativeSelect onChange={(e) => setFaction(e.target.value)}>
-            {NexusHub.FACTIONS.map(faction => <option key={faction} value={faction}>{faction}</option>)}
+            {FACTIONS.map(faction => <option key={faction} value={faction}>{faction}</option>)}
           </NativeSelect>
         </FormControl>
 

@@ -89,7 +89,7 @@ const SUFFIXES = [
   'Of Eluding'
 ]
 
-class NexusHub {
+export default class NexusHub {
 
   constructor(server, faction) {
     this.server = server
@@ -105,9 +105,7 @@ class NexusHub {
   }
 }
 
-module.exports = NexusHub
-
-module.exports.getServers = async function () {
+export async function getServers() {
   const request = await fetch(SERVER_API)
   let result = await request.json()
 
@@ -118,7 +116,7 @@ module.exports.getServers = async function () {
   return result
 }
 
-module.exports.searchItems = async function(query, limit = 10, threshold = 0.4) {
+export async function searchItems(query, limit = 10, threshold = 0.4) {
   const apiURL = util.format(SEARCH_API, limit, threshold, query)
   const request = await fetch(apiURL)
   let result = await request.json()
@@ -130,7 +128,7 @@ module.exports.searchItems = async function(query, limit = 10, threshold = 0.4) 
   return result
 }
 
-module.exports.searchSuggestedItems = async function(query, limit = 10) {
+export async function searchSuggestedItems(query, limit = 10) {
   const apiURL = util.format(SEARCH_SUGGEST_API, limit, query)
   const request = await fetch(apiURL)
   let result = await request.json()
@@ -142,7 +140,7 @@ module.exports.searchSuggestedItems = async function(query, limit = 10) {
   return result
 }
 
-module.exports.cleanItemSuffix = function(itemName) {
+export function cleanItemSuffix(itemName) {
   for (let suffix of SUFFIXES) {
     if (itemName.toLowerCase().endsWith(suffix.toLowerCase())) {
       itemName = itemName.substring(0, itemName.length - suffix.length)
@@ -152,6 +150,6 @@ module.exports.cleanItemSuffix = function(itemName) {
   return itemName
 }
 
-module.exports.FACTIONS = ['Alliance', 'Horde']
-module.exports.SEARCH_RATE_LIMIT_PER_SEC = 6
-module.exports.PRICE_RATE_LIMIT_PER_SEC = 3
+export const FACTIONS = ['Alliance', 'Horde']
+export const SEARCH_RATE_LIMIT_PER_SEC = 6
+export const PRICE_RATE_LIMIT_PER_SEC = 3
