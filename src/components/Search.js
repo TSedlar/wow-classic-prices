@@ -17,7 +17,7 @@ const throttle = require('p-throttle')
 const searchThrottle = throttle(async (nexus, cache, query, setResults) => {
     console.log(`${cache.prices.size} prices are cached`)
 
-    const items = await NexusHub.searchSuggestedItems(query, 10, 0.4)
+    const items = await NexusHub.searchSuggestedItems(NexusHub.cleanItemSuffix(query), 10, 0.4)
 
     console.log(`found [${items.length}] results`)
 
