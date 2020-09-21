@@ -96,8 +96,7 @@ function Search(props) {
             setPriceState({ prices: priceState.prices })
 
             // get only most similar matches
-            let fuzzyItems = CLASSIC_ITEMS.filter(i => i.name.toLowerCase().includes(query.toLowerCase()) ||
-                stringComp.compareTwoStrings(i.name.toLowerCase(), query.toLowerCase()) >= 0.65)
+            let fuzzyItems = CLASSIC_ITEMS.filter(i => i.name.toLowerCase().includes(query.toLowerCase()))
 
             // sort by similarity
             fuzzyItems.sort((a, b) => {
