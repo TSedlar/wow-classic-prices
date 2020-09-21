@@ -1,38 +1,87 @@
-.App {
+html, body {
   text-align: center;
+  background-color: #231e1b;
+  color: white;
 }
 
 .item-table {
+  display: flex;
+  flex-wrap: wrap;
+  align-self: center;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   margin-top: 12px;
+  padding: 0;
 }
 
-.item-table img {
+.item {
+  display: flex;
+  margin: 12px;
+  width: 375px;
+  height: 70px;
+  background-color: #100e0f;
   border-radius: 5px;
+  border: 1px solid #4d4c48;
 }
 
-.row {
-  margin-bottom: 12px;
+.item-icon {
+  padding: 6px;
+  margin-top: 6px;
+  margin-left: 6px;
+  flex-shrink: 1;
 }
 
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
+.item-icon > img {
+  border-radius: 5px;
+  border: 1px solid #857274;
+  width: 42px;
 }
 
-.column {
-  float: left;
-  height: 56px;
+.item-name {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  width: 100px;
+  font-size: 14px;
+  margin-left: 12px;
+  margin-right: 12px;
 }
 
-.left, .right {
-  width: 25%;
-  height: 56px;
-  line-height: 56px;
+.item-prices {
+  height: 100%;
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+  align-items: flex-end;
+  align-content: flex-end;
+  justify-content: center;
+  flex-grow: 1;
+  margin-right: 6px;
 }
 
-.middle {
-  width: 50%;
-  height: 56px;
-  line-height: 56px;
+.item-prices > div {
+  font-size: 11.5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.item-prices > div > span {
+  width: 65px;
+}
+
+.item-prices > div > img {
+  width: 16px;
+  height: 16px;
+}
+
+.item-prices > div > img.vendor {
+  margin-top: 2px;
 }

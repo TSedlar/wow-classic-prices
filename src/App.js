@@ -1,8 +1,9 @@
 import React, { createContext, useEffect, useState, useContext } from 'react'
 import { FormControl, InputLabel, NativeSelect } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+
 import Search from './components/Search'
-import NexusHub, { FACTIONS, getServers } from './helper/NexusHub'
+import { FACTIONS, getServers } from './helper/NexusHub'
 import { moneyToGSC } from './helper/WoWUtil'
 
 import './App.css'
@@ -37,12 +38,24 @@ const AppStore = ({ children }) => {
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    flexWrap: 'wrap',
+    flexWrap: 'wrap'
   },
   margin: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   }
 }))
+
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark',
+    text: {
+      primary: '#ad9c68'
+    },
+    primary: {
+      main: '#ad9c68',
+    }
+  },
+})
 
 function SearchContainer() {
   const [serverList, setServerList] = useState([])
@@ -64,28 +77,80 @@ function SearchContainer() {
   function getItemKey(item) {
     if (!server || !faction) {
       return null
-    } 
+    }
     return server.toLowerCase() + '-' + faction.toLowerCase() + '-' + item.uniqueName
   }
 
-  function getItemPrice(item) {
+  function getItemPrice(item, key) {
     let itemPrice = '?'
 
     const itemKey = getItemKey(item)
     if (priceState.prices.has(itemKey)) {
       let cachePrice = priceState.prices.get(itemKey)
-      if (cachePrice !== -1) {
-        itemPrice = cachePrice
+      if (cachePrice !== null && cachePrice[key]) {
+        try {
+          const directPrice = cachePrice[key]
+          if (directPrice === 'N/A') {
+            itemPrice = directPrice
+          } else {
+            itemPrice = moneyToGSC(parseInt(directPrice)).toString()
+          }
+        } catch (_) { // parse error
+          itemPrice = 'N/A'
+        }
+      } else {
+        itemPrice = 'N/A'
       }
     }
 
-    if (itemPrice !== -1 && itemPrice !== '?' && itemPrice !== 'N/A') {
-      itemPrice = moneyToGSC(parseInt(itemPrice)).toString()
-    }
     return itemPrice
   }
 
   const classes = useStyles()
+
+  function getItemPriceElements(item) {
+    const itemPrices = []
+    const historicalPrice = getItemPrice(item, 'historical')
+    const marketPrice = getItemPrice(item, 'market')
+    const vendorPrice = getItemPrice(item, 'vendor')
+
+    if (historicalPrice !== 'N/A') {
+      itemPrices.push(
+        <div key={"historical-" + getItemKey(item)} >
+          <img src="/static/images/historical.png" />
+          <span>{historicalPrice}</span>
+        </div>
+      )
+    }
+
+    if (marketPrice !== 'N/A') {
+      itemPrices.push(
+        <div key={"market-" + getItemKey(item)} >
+          <img src="/static/images/market.png" />
+          <span>{marketPrice}</span>
+        </div>
+      )
+    }
+
+    if (vendorPrice !== 'N/A') {
+      itemPrices.push(
+        <div key={"vendor-" + getItemKey(item)} >
+          <img className="vendor" src="/static/images/vendor.png" />
+          <span>{vendorPrice}</span>
+        </div>
+      )
+    }
+
+    if (itemPrices.length === 0) {
+      itemPrices.push(
+        <div key={"na-price-" + getItemKey(item)} >
+          <span>Prices N/A</span>
+        </div>
+      )
+    }
+
+    return itemPrices
+  }
 
   return (
     <div>
@@ -115,17 +180,17 @@ function SearchContainer() {
 
       <div className="item-table">
         {appState.items.map(item => (
-          <div className="search-item row">
-            <div className="column left">
+          <div key={"item-" + getItemKey(item)} className="search-item item">
+            <div key={"icon-" + getItemKey(item)} className="item-icon">
               <img src={util.format(ICON_URL_FORMAT, item.icon)}></img>
             </div>
 
-            <div className="column middle">
+            <div key={"name-" + getItemKey(item)} className="item-name">
               <span>{item.name}</span>
             </div>
 
-            <div className="column right">
-              <span>{getItemPrice(item)}</span>
+            <div key={"prices-" + getItemKey(item)} className="item-prices">
+              {getItemPriceElements(item)}
             </div>
           </div>
         ))}
@@ -137,9 +202,11 @@ function SearchContainer() {
 function App() {
   return (
     <AppStore>
-      <div className="App">
-        <SearchContainer />
-      </div>
+      <ThemeProvider theme={theme}>
+        <div className="App">
+          <SearchContainer />
+        </div>
+      </ThemeProvider>
     </AppStore>
   )
 }
