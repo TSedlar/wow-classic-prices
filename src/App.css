@@ -2,15 +2,37 @@
   text-align: center;
 }
 
-.react-autosuggest__suggestions-list {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
+.item-table {
+  margin-top: 12px;
 }
 
-.react-autosuggest__suggestion {
-  padding: 10px 20px;
-  border: 1px solid black;
-  background: pink;
-  align-items: left;
+.item-table img {
+  border-radius: 5px;
+}
+
+.row {
+  margin-bottom: 12px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.column {
+  float: left;
+  height: 56px;
+}
+
+.left, .right {
+  width: 25%;
+  height: 56px;
+  line-height: 56px;
+}
+
+.middle {
+  width: 50%;
+  height: 56px;
+  line-height: 56px;
 }

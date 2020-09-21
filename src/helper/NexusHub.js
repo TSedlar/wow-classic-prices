@@ -99,7 +99,9 @@ class NexusHub {
   async fetchData(itemName) {
     const apiURL = util.format(ITEM_API, this.server, this.faction, itemName)
     const request = await fetch(apiURL)
-    return await request.json()
+    const result = await request.json()
+
+    return result
   }
 }
 
@@ -152,4 +154,4 @@ module.exports.cleanItemSuffix = function(itemName) {
 
 module.exports.FACTIONS = ['Alliance', 'Horde']
 module.exports.SEARCH_RATE_LIMIT_PER_SEC = 6
-module.exports.PRICE_RATE_LIMIT_PER_SEC = 4
+module.exports.PRICE_RATE_LIMIT_PER_SEC = 3
