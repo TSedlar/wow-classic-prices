@@ -1,3 +1,12 @@
+/**
+ * A utility class for world of warcraft related methods
+ * 
+ * @summary A world of warcraft utility class
+ * @author Tyler Sedlar <tyler@sedlar.me>
+ * 
+ * @since 9/20/2020
+ */
+
 module.exports.moneyToGSC = (m) => {
   if (m < 0) {
     return 'N/A'

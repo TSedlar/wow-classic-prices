@@ -3,6 +3,17 @@
   "version": "0.1.0",
   "description": "View item prices for WoW Classic easily",
   "private": true,
+  "author": {
+    "name": "Tyler Sedlar",
+    "url": "https://sedlar.me/",
+    "email": "tyler@sedlar.me"
+  },
+  "contributors": [
+    {
+      "name": "Jacob Doiron",
+      "url": "https://github.com/jdoiron94"
+    }
+  ],
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@testing-library/jest-dom": "^4.2.4",

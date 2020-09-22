@@ -1,3 +1,12 @@
+/**
+ * A throttled queue that can be stopped at any time
+ * 
+ * @summary A throttled and cancelable queue
+ * @author Tyler Sedlar <tyler@sedlar.me>
+ * 
+ * @since 9/21/2020
+ */
+
 const { cancelable, CancelablePromise } = require('cancelable-promise');
 
 export default class ThrottledPromiseQueue {

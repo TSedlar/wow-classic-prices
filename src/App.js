@@ -1,4 +1,13 @@
-import React, { createContext, useEffect, useState, useContext } from 'react'
+/**
+ * The entry point for this web application
+ * 
+ * @summary The entry point for this web application
+ * @author Tyler Sedlar <tyler@sedlar.me>
+ * 
+ * @since 9/20/2020
+ */
+
+import React, { createContext, useState, useContext } from 'react'
 import { FormControl, InputLabel, NativeSelect } from '@material-ui/core'
 import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
