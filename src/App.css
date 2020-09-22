@@ -26,6 +26,11 @@ html, body {
   border: 1px solid #4d4c48;
 }
 
+.item:hover {
+  cursor: pointer;
+  opacity: 0.9;
+}
+
 .item-icon {
   padding: 6px;
   margin-top: 6px;

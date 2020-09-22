@@ -11,6 +11,7 @@ import './App.css'
 const util = require('util')
 
 const ICON_URL_FORMAT = `https://render-classic-us.worldofwarcraft.com/icons/56/%s.jpg`
+const WOWHEAD_URL_FORMAT = `https://classic.wowhead.com/item=%s`
 
 const initialAppState = {
   items: []
@@ -152,6 +153,10 @@ function SearchContainer() {
     return itemPrices
   }
 
+  function openWowHeadLink(item) {
+    window.open(util.format(WOWHEAD_URL_FORMAT, item.itemId))
+  }
+
   return (
     <div>
       <div className={classes.root}>
@@ -180,7 +185,9 @@ function SearchContainer() {
 
       <div className="item-table">
         {appState.items.map(item => (
-          <div key={"item-" + getItemKey(item)} className="search-item item">
+          <div key={"item-" + getItemKey(item)}
+            className="search-item item"
+            onClick={() => openWowHeadLink(item)}>
             <div key={"icon-" + getItemKey(item)} className="item-icon">
               <img src={util.format(ICON_URL_FORMAT, item.icon)}></img>
             </div>
