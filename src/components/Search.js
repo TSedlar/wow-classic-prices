@@ -12,11 +12,11 @@ import { TextField } from '@material-ui/core';
 
 import NexusHub, { cleanItemSuffix, PRICE_RATE_LIMIT_PER_SEC } from '../helper/NexusHub'
 import ThrottledPromiseQueue from '../helper/ThrottledPromiseQueue'
+import { levenshtein } from '../helper/StringUtil'
 
 import { AppContext, PriceContext } from '../App'
 
 const CLASSIC_ITEMS = require('wow-classic-items/data/json/data.json')
-const stringComp = require('string-similarity')
 
 const itemDataQueue = new ThrottledPromiseQueue(PRICE_RATE_LIMIT_PER_SEC)
 
@@ -106,9 +106,9 @@ function Search(props) {
 
             // sort by similarity
             fuzzyItems.sort((a, b) => {
-                const aSimilarity = stringComp.compareTwoStrings(a.name.toLowerCase(), query.toLowerCase())
-                const bSimilarity = stringComp.compareTwoStrings(b.name.toLowerCase(), query.toLowerCase())
-                return bSimilarity - aSimilarity
+                const aSimilarity = levenshtein(a.name.toLowerCase(), query.toLowerCase())
+                const bSimilarity = levenshtein(b.name.toLowerCase(), query.toLowerCase())
+                return aSimilarity - bSimilarity
             })
 
             // top 10 ranked matches
