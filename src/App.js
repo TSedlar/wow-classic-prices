@@ -9,6 +9,7 @@ import { moneyToGSC } from './helper/WoWUtil'
 import './App.css'
 
 const util = require('util')
+const Cookies = require('js-cookie')
 
 const ICON_URL_FORMAT = `https://render-classic-us.worldofwarcraft.com/icons/56/%s.jpg`
 const WOWHEAD_URL_FORMAT = `https://classic.wowhead.com/item=%s`
@@ -58,22 +59,12 @@ const theme = createMuiTheme({
   },
 })
 
-function SearchContainer() {
-  const [serverList, setServerList] = useState([])
-  const [server, setServer] = useState(null)
-  const [faction, setFaction] = useState(FACTIONS[0])
+function SearchContainer(props) {
+  const [server, setServer] = useState(props.defaultServer)
+  const [faction, setFaction] = useState(props.defaultFaction)
 
   const [appState] = useContext(AppContext)
   const [priceState] = useContext(PriceContext)
-
-  // TODO: check cache setServer/setFaction
-
-  useEffect(() => {
-    getServers().then(servers => {
-      setServerList(servers)
-      setServer(servers[0].slug)
-    })
-  }, [])
 
   function getItemKey(item) {
     if (!server || !faction) {
@@ -160,20 +151,32 @@ function SearchContainer() {
   return (
     <div>
       <div className={classes.root}>
-        {server && <FormControl fullWidth className={classes.margin}>
+        <FormControl fullWidth className={classes.margin}>
           <InputLabel>Server</InputLabel>
           <NativeSelect
-            value={server.slug}
-            onChange={(e) => setServer(e.target.value)}>
-            {serverList.map(server => (
-              <option key={server.slug} value={server.slug}>{server.name}</option>
+            defaultValue={props.defaultServer}
+            onChange={(e) => {
+              Cookies.set('server', e.target.value)
+              setServer(e.target.value)
+            }}>
+            {props.servers.map(server => (
+              <option
+                key={server.slug}
+                value={server.slug}>
+                {server.name}
+              </option>
             ))}
           </NativeSelect>
-        </FormControl>}
+        </FormControl>
 
         <FormControl fullWidth className={classes.margin}>
           <InputLabel>Faction</InputLabel>
-          <NativeSelect onChange={(e) => setFaction(e.target.value)}>
+          <NativeSelect
+            onChange={(e) => {
+              Cookies.set('faction', e.target.value)
+              setFaction(e.target.value)
+            }}
+            defaultValue={props.defaultFaction}>
             {FACTIONS.map(faction => <option key={faction} value={faction}>{faction}</option>)}
           </NativeSelect>
         </FormControl>
@@ -207,11 +210,28 @@ function SearchContainer() {
 }
 
 function App() {
-  return (
+  let defaultServer = Cookies.get('server') || null
+  let defaultFaction = Cookies.get('faction') || FACTIONS[0]
+
+  const [servers, setServers] = useState(null)
+
+  if (!servers) {
+    getServers().then(servers => {
+      if (!defaultServer) {
+        defaultServer = servers[0].slug
+      }
+      setServers(servers)
+    })
+  }
+
+  console.log('cookie server: ' + defaultServer)
+  console.log('cookie faction: ' + defaultFaction)
+
+  return servers && (
     <AppStore>
       <ThemeProvider theme={theme}>
         <div className="App">
-          <SearchContainer />
+          <SearchContainer servers={servers} defaultServer={defaultServer} defaultFaction={defaultFaction} />
         </div>
       </ThemeProvider>
     </AppStore>
