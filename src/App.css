@@ -1,10 +1,16 @@
 html, body {
+  display: flex;
+  align-self: center;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   background-color: #231e1b;
   color: white;
 }
 
 .item-table {
+  max-width: 1100px;
   display: flex;
   flex-wrap: wrap;
   align-self: center;
@@ -24,6 +30,17 @@ html, body {
   background-color: #100e0f;
   border-radius: 5px;
   border: 1px solid #4d4c48;
+}
+
+@media only screen and (max-width: 500px) {
+  .item-table {
+    margin-top: -6px;
+  }
+  .item {
+    margin: 7px;
+    margin-bottom: 0;
+    width: 100%;
+  }
 }
 
 .item:hover {
