@@ -19,7 +19,7 @@ html, body {
 .item {
   display: flex;
   margin: 12px;
-  width: 375px;
+  width: 240px;
   height: 70px;
   background-color: #100e0f;
   border-radius: 5px;
