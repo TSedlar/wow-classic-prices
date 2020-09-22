@@ -8,5 +8,5 @@ View item prices for WoW Classic easily using the NexusHub API
 
 <p>
   <img src="readme_assets/mobile.png" width="300" />
-  <img src="readme_assets/desktop.png" width="300" />
+  <img src="readme_assets/desktop.png" width="583" />
 </p>
