@@ -165,7 +165,7 @@ function SearchContainer(props) {
           <NativeSelect
             defaultValue={props.defaultServer}
             onChange={(e) => {
-              Cookies.set('server', e.target.value)
+              Cookies.set('server', e.target.value, { expires: 365})
               setServer(e.target.value)
             }}>
             {props.servers.map(server => (
@@ -182,7 +182,7 @@ function SearchContainer(props) {
           <InputLabel>Faction</InputLabel>
           <NativeSelect
             onChange={(e) => {
-              Cookies.set('faction', e.target.value)
+              Cookies.set('faction', e.target.value, { expires: 365})
               setFaction(e.target.value)
             }}
             defaultValue={props.defaultFaction}>
