@@ -7,7 +7,7 @@
  * @since 9/20/2020
  */
 
-import React, { createContext, useState, useContext } from 'react'
+import React, { createContext, useState, useContext, useEffect } from 'react'
 import { FormControl, InputLabel, NativeSelect } from '@material-ui/core'
 import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
@@ -118,7 +118,7 @@ function SearchContainer(props) {
     if (historicalPrice !== 'N/A') {
       itemPrices.push(
         <div key={"historical-" + getItemKey(item)} >
-          <img src="/static/images/historical.png" />
+          <img src="/static/images/historical.png" alt="historical price icon"/>
           <span>{historicalPrice}</span>
         </div>
       )
@@ -127,7 +127,7 @@ function SearchContainer(props) {
     if (marketPrice !== 'N/A') {
       itemPrices.push(
         <div key={"market-" + getItemKey(item)} >
-          <img src="/static/images/market.png" />
+          <img src="/static/images/market.png" alt="market price icon"/>
           <span>{marketPrice}</span>
         </div>
       )
@@ -136,7 +136,7 @@ function SearchContainer(props) {
     if (vendorPrice !== 'N/A') {
       itemPrices.push(
         <div key={"vendor-" + getItemKey(item)} >
-          <img className="vendor" src="/static/images/vendor.png" />
+          <img className="vendor" src="/static/images/vendor.png" alt="vendor price icon"/>
           <span>{vendorPrice}</span>
         </div>
       )
@@ -165,7 +165,7 @@ function SearchContainer(props) {
           <NativeSelect
             defaultValue={props.defaultServer}
             onChange={(e) => {
-              Cookies.set('server', e.target.value, { expires: 365})
+              Cookies.set('server', e.target.value, { expires: 365 })
               setServer(e.target.value)
             }}>
             {props.servers.map(server => (
@@ -182,7 +182,7 @@ function SearchContainer(props) {
           <InputLabel>Faction</InputLabel>
           <NativeSelect
             onChange={(e) => {
-              Cookies.set('faction', e.target.value, { expires: 365})
+              Cookies.set('faction', e.target.value, { expires: 365 })
               setFaction(e.target.value)
             }}
             defaultValue={props.defaultFaction}>
@@ -201,7 +201,7 @@ function SearchContainer(props) {
             className="search-item item"
             onClick={() => openWowHeadLink(item)}>
             <div key={"icon-" + getItemKey(item)} className="item-icon">
-              <img src={util.format(ICON_URL_FORMAT, item.icon)}></img>
+              <img src={util.format(ICON_URL_FORMAT, item.icon)} alt={item.name}></img>
             </div>
 
             <div key={"name-" + getItemKey(item)} className="item-name">
@@ -233,8 +233,11 @@ function App() {
     })
   }
 
-  console.log('cookie server: ' + defaultServer)
-  console.log('cookie faction: ' + defaultFaction)
+  // only debug on initial render
+  useEffect(() => {
+    console.log('cookie server: ' + defaultServer)
+    console.log('cookie faction: ' + defaultFaction)
+  }, [])
 
   return servers && (
     <AppStore>

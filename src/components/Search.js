@@ -8,7 +8,7 @@
  */
 
 import React, { useEffect, useState, useContext } from 'react'
-import { TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core'
 
 import NexusHub, { cleanItemSuffix, PRICE_RATE_LIMIT_PER_SEC } from '../helper/NexusHub'
 import ThrottledPromiseQueue from '../helper/ThrottledPromiseQueue'
