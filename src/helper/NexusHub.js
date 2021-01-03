@@ -152,4 +152,4 @@ export function cleanItemSuffix(itemName) {
 
 export const FACTIONS = ['Alliance', 'Horde']
 export const SEARCH_RATE_LIMIT_PER_SEC = 6
-export const PRICE_RATE_LIMIT_PER_SEC = 3
+export const PRICE_RATE_LIMIT_PER_SEC = 4
