@@ -21,7 +21,7 @@ const util = require('util')
 const Cookies = require('js-cookie')
 
 const ICON_URL_FORMAT = `https://render-classic-us.worldofwarcraft.com/icons/56/%s.jpg`
-const WOWHEAD_URL_FORMAT = `https://classic.wowhead.com/item=%s`
+const WOWHEAD_URL_FORMAT = `https://tbc.wowhead.com/item=%s`
 
 const initialAppState = {
   items: []

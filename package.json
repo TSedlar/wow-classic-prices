@@ -22,7 +22,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
-    "wow-classic-items": "^0.8.2"
+    "wow-classic-items": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
